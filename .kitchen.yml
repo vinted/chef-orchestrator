@@ -1,0 +1,41 @@
+---
+driver:
+  name: docker
+
+provisioner:
+  name: chef_zero
+  require_chef_omnibus: 12
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: centos-7
+    driver_plugin: docker
+    driver:
+      image: centos:7
+      run_command: '/usr/lib/systemd/systemd'
+      run_options: '--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'
+  - name: ubuntu-18.04
+    driver_plugin: docker
+    driver:
+      image: ubuntu:18.04
+      run_command: '/bin/systemd'
+      run_options: '--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro'
+
+suites:
+  - name: orchestrator-mysql
+    run_list:
+      - recipe[orchestrator::orchestrator]
+    verifier:
+      inspec_tests:
+        - test/integration/mysql
+    attributes:
+
+  - name: orchestrator-sqlite
+    run_list:
+      - recipe[orchestrator-test-sqlite::default]
+    verifier:
+      inspec_tests:
+        - test/integration/sqlite
+    attributes:
