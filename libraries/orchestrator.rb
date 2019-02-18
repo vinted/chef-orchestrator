@@ -208,7 +208,8 @@ class Chef
         ].each do |package|
           package_url = orchestrator_package(package)
           package_file = ::File.join(Chef::Config[:file_cache_path], ::File.basename(package_url))
-          remote_file package_file do
+          remote_file "Remote_file: #{package_url}" do
+            path package_file
             source package_url
             not_if orchestrator_installed(package)
             mode 0o644
@@ -219,7 +220,7 @@ class Chef
       end
 
       def orhcestrator_package_rpm(package_file, package)
-        package package_file do
+        package "RPM package: #{package}" do
           source package_file
           not_if orchestrator_installed(package)
         end
@@ -227,7 +228,7 @@ class Chef
 
       def orhcestrator_package_deb(package_file, package)
         package 'jq'
-        dpkg_package package_file do
+        dpkg_package "DPKG package: #{package}" do
           source package_file
           not_if orchestrator_installed(package)
         end
