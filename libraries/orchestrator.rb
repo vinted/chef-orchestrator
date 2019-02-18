@@ -186,6 +186,7 @@ class Chef
           mode 0o644
           variables root_pass: new_resource.mysql_root_password
           not_if { ::File.exist?('/root/.my.cnf') }
+          cookbook 'orchestrator'
         end
       end
 
