@@ -63,6 +63,11 @@ class Chef
         default: lazy { 'secret' }
       )
       attribute(
+        :mysql_socket,
+        kind_of: String,
+        default: lazy { '/var/run/mysql-orchestrator/mysqld.sock' }
+      )
+      attribute(
         :raft_nodes,
         kind_of: Array,
         default: []
@@ -187,20 +192,22 @@ class Chef
           variables root_pass: new_resource.mysql_root_password
           not_if { ::File.exist?('/root/.my.cnf') }
           cookbook 'orchestrator'
+          sensitive true
         end
       end
 
       def create_orchestrator_db
         execute 'create_orchestrator_database' do
-          command 'mysql -S /var/run/mysql-orchestrator/mysqld.sock '\
+          command "mysql -S #{new_resource.mysql_socket} "\
             "-e #{create_orchestrator_db_command}"
           sensitive true
-          not_if 'mysql -S /var/run/mysql-orchestrator/mysqld.sock -u'\
-          " #{new_resource.orchestrator_database_user} " \
-          "--password=#{new_resource.orchestrator_database_password} -e 'SELECT version()'"
+          not_if "mysql -S #{new_resource.mysql_socket} -u "\
+            "#{new_resource.orchestrator_database_user} " \
+            "--password=#{new_resource.orchestrator_database_password} -e 'SELECT version()'"
         end
       end
 
+      # rubocop:disable Metrics/AbcSize
       def orchestrator_install
         %w[
           orchestrator
@@ -218,6 +225,7 @@ class Chef
           orhcestrator_package_deb(package_file, package) if platform_family?('debian')
         end
       end
+      # rubocop:enable Metrics/AbcSize
 
       def orhcestrator_package_rpm(package_file, package)
         package "RPM package: #{package}" do

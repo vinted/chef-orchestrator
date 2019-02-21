@@ -19,6 +19,7 @@ https://github.com/github/orchestrator
    http_user 'http_user'
    http_password 'secret'
    raft_nodes []
+   mysql_socket '/var/run/mysql-orchestrator/mysqld.sock'
  end
  ```
 Cookbook will install fresh mysql instance and configure it to serve orchestrator node.
