@@ -27,6 +27,22 @@ Cookbook will install fresh mysql instance and configure it to serve orchestrato
  If `mysql_root_password` is not defined, random mysql root password will be generated upon installation and saved into `/root/.my.cnf` credentials file.
  If you want to manually setup mysql instance, you can skip mysql installation by setting `install_mysql` to `false`.
 
+**Examples**
+
+Install orchestrator with mysql-community server as backend db:
+
+```
+orchestrator_service 'default' do
+end
+```
+
+Install orchestrator with sqlite3 as backend db:
+```
+orchestrator_service 'default' do
+  database_backend 'sqlite'
+end
+```
+
 **Cookbook dependencies**
 
 Depends on:
