@@ -105,12 +105,13 @@ class Chef
       end
 
       def create_orchestrator_db_command
+        backend_db_host = node['orchestrator']['config']['MySQLOrchestratorHost']
         <<~MYSQL
-          "CREATE USER '#{new_resource.orchestrator_database_user}'@'localhost'
+          "CREATE USER '#{new_resource.orchestrator_database_user}'@'#{backend_db_host}'
             IDENTIFIED BY '#{new_resource.orchestrator_database_password}';
           CREATE DATABASE #{node['orchestrator']['database']['name']} CHARACTER SET utf8mb4;
           GRANT ALL PRIVILEGES ON #{node['orchestrator']['database']['name']}.* TO
-            '#{new_resource.orchestrator_database_user}'@'localhost';
+            '#{new_resource.orchestrator_database_user}'@'#{backend_db_host}';
           FLUSH PRIVILEGES;"
         MYSQL
       end
