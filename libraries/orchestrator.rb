@@ -202,7 +202,7 @@ class Chef
           command "mysql -S #{new_resource.mysql_socket} "\
             "-e #{create_orchestrator_db_command}"
           sensitive true
-          not_if "mysql -S #{new_resource.mysql_socket} -u "\
+          not_if "mysql -h #{node['orchestrator']['config']['MySQLOrchestratorHost']} -u "\
             "#{new_resource.orchestrator_database_user} " \
             "--password=#{new_resource.orchestrator_database_password} -e 'SELECT version()'"
         end
