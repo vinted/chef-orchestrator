@@ -48,34 +48,15 @@ default['orchestrator']['config']['ReasonableMaintenanceReplicationLagSeconds'] 
 default['orchestrator']['config']['MaintenanceExpireMinutes'] = 10
 default['orchestrator']['config']['MaintenancePurgeDays'] = 365
 default['orchestrator']['config']['CandidateInstanceExpireMinutes'] = 60
-default['orchestrator']['config']['AuditLogFile'] =
-  '/tmp/orchestrator-audit.log'
+default['orchestrator']['config']['AuditLogFile'] = '/tmp/orchestrator-audit.log'
 default['orchestrator']['config']['AuditToSyslog'] = false
 default['orchestrator']['config']['AuditPageSize'] = 20
 default['orchestrator']['config']['AuditPurgeDays'] = 365
-default['orchestrator']['config']['RemoveTextFromHostnameDisplay'] =
-  '.vinted.net:3306'
 default['orchestrator']['config']['ReadOnly'] = false
 default['orchestrator']['config']['AuthenticationMethod'] = 'multi'
 default['orchestrator']['config']['AuthUserHeader'] = ''
 default['orchestrator']['config']['PowerAuthUsers'] = ['*']
-default['orchestrator']['config']['ClusterNameToAlias'] =
-  { '127.0.0.1' => 'test suite' }
-default['orchestrator']['config']['DetectClusterAliasQuery'] =
-  'SELECT value FROM _vt.local_metadata WHERE name=\'ClusterAlias\''
-default['orchestrator']['config']['DetectClusterDomainQuery'] = ''
-default['orchestrator']['config']['DetectInstanceAliasQuery'] =
-  'SELECT value FROM _vt.local_metadata WHERE name=\'Alias\''
-default['orchestrator']['config']['DetectPromotionRuleQuery'] =
-  'SELECT value FROM _vt.local_metadata WHERE name=\'PromotionRule\''
-default['orchestrator']['config']['DataCenterPattern'] =
-  '[.]([^.]+)[.][^.]+[.]vinted[.]net'
-default['orchestrator']['config']['PhysicalEnvironmentPattern'] =
-  '[.]([^.]+[.][^.]+)[.]vinted[.]net'
 default['orchestrator']['config']['PromotionIgnoreHostnameFilters'] = []
-default['orchestrator']['config']['DetectSemiSyncEnforcedQuery'] =
-  'SELECT @@global.rpl_semi_sync_master_wait_no_slave AND @@global.rpl_semi_sync_master_timeout'\
-  ' > 1000000'
 default['orchestrator']['config']['ServeAgentsHttp'] = false
 default['orchestrator']['config']['AgentsUseSSL'] = false
 default['orchestrator']['config']['AgentsUseMutualTLS'] = false
@@ -100,10 +81,6 @@ default['orchestrator']['config']['AgentAutoDiscover'] = false
 default['orchestrator']['config']['UnseenAgentForgetHours'] = 6
 default['orchestrator']['config']['StaleSeedFailMinutes'] = 60
 default['orchestrator']['config']['SeedAcceptableBytesDiff'] = 8192
-default['orchestrator']['config']['PseudoGTIDPattern'] =
-  'drop view if exists .*?`_pseudo_gtid_hint__'
-default['orchestrator']['config']['PseudoGTIDMonotonicHint'] = 'asc:'
-default['orchestrator']['config']['DetectPseudoGTIDQuery'] = ''
 default['orchestrator']['config']['BinlogEventsChunkSize'] = 10_000
 default['orchestrator']['config']['BufferBinlogEvents'] = true
 default['orchestrator']['config']['SkipBinlogEventsContaining'] = []
@@ -112,35 +89,8 @@ default['orchestrator']['config']['FailureDetectionPeriodBlockMinutes'] = 60
 default['orchestrator']['config']['RecoveryPollSeconds'] = 10
 default['orchestrator']['config']['RecoveryPeriodBlockMinutes'] = 1
 default['orchestrator']['config']['RecoveryPeriodBlockSeconds'] = 60
-default['orchestrator']['config']['RecoveryIgnoreHostnameFilters'] = []
-default['orchestrator']['config']['RecoverMasterClusterFilters'] = ['.*']
-default['orchestrator']['config']['RecoverIntermediateMasterClusterFilters'] =
-  ['_intermediate_master_pattern_']
-default['orchestrator']['config']['OnFailureDetectionProcesses'] = [
-  "echo 'Detected {failureType} on {failureCluster}. Affected replicas: {countSlaves}' >> "\
-  '/tmp/recovery.log'
-]
-default['orchestrator']['config']['PreFailoverProcesses'] = [
-  "echo 'Will recover from {failureType} on {failureCluster}' >> /tmp/recovery.log"
-]
-default['orchestrator']['config']['PostFailoverProcesses'] = [
-  "echo '(for all types) Recovered from {failureType} on {failureCluster}. "\
-  'Failed: {failedHost}:{failedPort}; '\
-  "Successor: {successorHost}:{successorPort}' >> /tmp/recovery.log"
-]
-default['orchestrator']['config']['PostUnsuccessfulFailoverProcesses'] = []
-default['orchestrator']['config']['PostMasterFailoverProcesses'] = [
-  "echo 'Recovered from {failureType} on {failureCluster}. Failed: {failedHost}:{failedPort}; "\
-  "Promoted: {successorHost}:{successorPort}' >> /tmp/recovery.log",
-  'vtctlclient -server vtctld:15999 TabletExternallyReparented {successorAlias}'
-]
-default['orchestrator']['config']['PostIntermediateMasterFailoverProcesses'] = [
-  "echo 'Recovered from {failureType} on {failureCluster}. Failed: {failedHost}:{failedPort}; "\
-  "Successor: {successorHost}:{successorPort}' >> /tmp/recovery.log"
-]
 default['orchestrator']['config']['CoMasterRecoveryMustPromoteOtherCoMaster'] = true
-default['orchestrator']['config']['DetachLostSlavesAfterMasterFailover'] =
-  true
+default['orchestrator']['config']['DetachLostSlavesAfterMasterFailover'] = true
 default['orchestrator']['config']['ApplyMySQLPromotionAfterMasterFailover'] = true
 default['orchestrator']['config']['MasterFailoverLostInstancesDowntimeMinutes'] = 0
 default['orchestrator']['config']['PostponeSlaveRecoveryOnLagMinutes'] = 0
