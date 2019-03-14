@@ -72,6 +72,11 @@ class Chef
         kind_of: Array,
         default: []
       )
+      attribute(
+        :reload_on_config_change,
+        kind_of: [TrueClass, FalseClass],
+        default: false
+      )
 
       def random_password
         SecureRandom.hex
@@ -104,6 +109,7 @@ class Chef
         return true if new_resource.install_mysql && new_resource.database_backend == 'mysql'
       end
 
+      # rubocop:disable Metrics/AbcSize
       def create_orchestrator_db_command
         backend_db_host = node['orchestrator']['config']['MySQLOrchestratorHost']
         <<~MYSQL
@@ -115,6 +121,7 @@ class Chef
           FLUSH PRIVILEGES;"
         MYSQL
       end
+      # rubocop:enable Metrics/AbcSize
 
       def orchestrator_package(package)
         return node['orchestrator']['rpm_package'][package] if platform_family?('rhel')
@@ -138,6 +145,14 @@ class Chef
           ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY
           '#{new_resource.mysql_root_password}';
         MYSQL
+      end
+
+      def reload_on_config_change
+        new_resource.reload_on_config_change
+      end
+
+      def orchestrator_service_action
+        reload_on_config_change ? :reload : :nothing
       end
 
       protected
@@ -310,6 +325,9 @@ class Chef
             WantedBy=multi-user.target
           SYSTEMD
           action %i[create enable start]
+        end
+        service 'orchestrator' do
+          subscribes orchestrator_service_action, 'file[/etc/orchestrator.conf.json]'
         end
       end
 
