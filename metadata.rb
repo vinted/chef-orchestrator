@@ -7,7 +7,7 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 issues_url 'https://github.com/vinted/chef-orchestrator/issues'
 source_url 'https://github.com/vinted/chef-orchestrator'
 chef_version '>= 12.1' if respond_to?(:chef_version)
-version '0.3.1'
+version '0.4.0'
 
 supports 'redhat'
 supports 'centos'

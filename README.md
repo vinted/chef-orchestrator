@@ -20,6 +20,7 @@ https://github.com/github/orchestrator
    http_password 'secret'
    raft_nodes []
    mysql_socket '/var/run/mysql-orchestrator/mysqld.sock'
+   reload_on_config_change true/false
  end
  ```
 Cookbook will install fresh mysql instance and configure it to serve orchestrator node.
@@ -27,6 +28,8 @@ Cookbook will install fresh mysql instance and configure it to serve orchestrato
  All of the above attributes are optional, though recommended for production.
  If `mysql_root_password` is not defined, random mysql root password will be generated upon installation and saved into `/root/.my.cnf` credentials file.
  If you want to manually setup mysql instance, you can skip mysql installation by setting `install_mysql` to `false`.
+
+ `reload_on_config_change` - reload orchestrator if config file changes. Default: `false`.
 
 **Examples**
 
@@ -38,6 +41,7 @@ end
 ```
 
 Install orchestrator with sqlite3 as backend db:
+
 ```
 orchestrator_service 'default' do
   database_backend 'sqlite'
