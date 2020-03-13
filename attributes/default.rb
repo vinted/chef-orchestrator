@@ -1,3 +1,4 @@
+default['orchestrator']['database_backend'] = 'mysql'
 default['orchestrator']['mysql']['version'] = '5.7'
 default['orchestrator']['database']['name'] = 'orchestrator'
 default['orchestrator']['database']['user'] = 'orchestrator'

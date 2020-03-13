@@ -15,7 +15,7 @@ class Chef
       attribute(
         :database_backend,
         kind_of: String,
-        default: lazy { 'mysql' }
+        default: lazy { node['orchestrator']['database_backend'] }
       )
       attribute(
         :install_mysql,
@@ -92,8 +92,8 @@ class Chef
 
       provides(:orchestrator_service)
 
-      # rubocop:disable Metrics/AbcSize
       def action_install
+        dependencies_install
         orchestrator_install
         orchestrator_system_user
         create_raft_directory
@@ -103,7 +103,6 @@ class Chef
         orchestrator_config
         orchestrator_service
       end
-      # rubocop:enable Metrics/AbcSize
 
       def install_mysql?
         return true if new_resource.install_mysql && new_resource.database_backend == 'mysql'
@@ -167,6 +166,15 @@ class Chef
           gpgcheck false
           only_if { platform_family?('rhel') }
         end
+      end
+
+      def dependencies_install
+        if platform_family?('rhel')
+          package 'epel-release' do
+            not_if 'yum repolist enabled | grep epel'
+          end
+        end
+        package 'jq'
       end
 
       # rubocop:disable Metrics/AbcSize

@@ -54,5 +54,8 @@ Depends on:
 `mysql`
 `poise`
 
+**Orchestrator dependencies**
+
+Depends on `jq` package from `epel` repository.
 
 [![Build Status](https://travis-ci.org/vinted/chef-orchestrator.svg?branch=master)](https://travis-ci.org/vinted/chef-orchestrator)

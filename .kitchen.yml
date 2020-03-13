@@ -26,7 +26,7 @@ platforms:
 suites:
   - name: orchestrator-mysql
     run_list:
-      - recipe[orchestrator-test-mysql::default]
+      - recipe[orchestrator::default]
     verifier:
       inspec_tests:
         - test/integration/mysql
@@ -34,8 +34,10 @@ suites:
 
   - name: orchestrator-sqlite
     run_list:
-      - recipe[orchestrator-test-sqlite::default]
+      - recipe[orchestrator::default]
     verifier:
       inspec_tests:
         - test/integration/sqlite
     attributes:
+      orchestrator:
+        database_backend: sqlite
