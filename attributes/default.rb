@@ -12,13 +12,13 @@ default['orchestrator']['user'] = 'orchestrator'
 default['orchestrator']['group'] = 'orchestrator'
 
 default['orchestrator']['rpm_package']['orchestrator'] =
-  'https://github.com/github/orchestrator/releases/download/v3.1.4/'\
-  'orchestrator-3.1.4-1.x86_64.rpm'
+  'https://github.com/github/orchestrator/releases/download/v3.2.2/'\
+  'orchestrator-3.2.2-1.x86_64.rpm'
 default['orchestrator']['rpm_package']['orchestrator-client'] =
-  'https://github.com/github/orchestrator/releases/download/v3.1.4/'\
-  'orchestrator-client-3.1.4-1.x86_64.rpm'
+  'https://github.com/github/orchestrator/releases/download/v3.2.2/'\
+  'orchestrator-client-3.2.2-1.x86_64.rpm'
 default['orchestrator']['deb_package']['orchestrator'] =
-  'https://github.com/github/orchestrator/releases/download/v3.1.4/orchestrator_3.1.4_amd64.deb'
+  'https://github.com/openark/orchestrator/releases/download/v3.2.2/orchestrator_3.2.2_amd64.deb'
 default['orchestrator']['deb_package']['orchestrator-client'] =
-  'https://github.com/github/orchestrator/releases/download/v3.1.4/'\
-  'orchestrator-client_3.1.4_amd64.deb'
+  'https://github.com/github/orchestrator/releases/download/v3.2.2/'\
+  'orchestrator-client_3.2.2_amd64.deb'
