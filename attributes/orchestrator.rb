@@ -26,7 +26,6 @@ default['orchestrator']['config']['MySQLConnectTimeoutSeconds'] = 1
 default['orchestrator']['config']['DefaultInstancePort'] = 3306
 default['orchestrator']['config']['SkipOrchestratorDatabaseUpdate'] = false
 default['orchestrator']['config']['ReplicationLagQuery'] = ''
-default['orchestrator']['config']['SlaveLagQuery'] = ''
 default['orchestrator']['config']['SlaveStartPostWaitMilliseconds'] = 1000
 default['orchestrator']['config']['DiscoverByShowSlaveHosts'] = true
 default['orchestrator']['config']['InstancePollSeconds'] = 12
